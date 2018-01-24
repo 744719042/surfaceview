@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">surfaceview</string>
+    <string name="surface_start">开始</string>
+    <string name="surface_stop">结束</string>
+</resources>
