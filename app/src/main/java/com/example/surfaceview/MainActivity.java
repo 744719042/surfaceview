@@ -19,8 +19,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private static final int DEFAULT_AMPLITUDE = 200;
 
     private SurfaceView surfaceView;
-    private Button start;
-    private Button stop;
+    private Button button;
     private SeekBar waveLength;
     private SeekBar amplitude;
     private SurfaceHolder surfaceHolder;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private volatile boolean isRunning = false;
     private volatile int waveLengthValue = DEFAULT_WAVE_LENGTH;
     private volatile int amplitudeValue = DEFAULT_AMPLITUDE;
-    private volatile int phaseValue = 0;
+    private int phaseValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +40,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
         surfaceView.getHolder().addCallback(this);
         surfaceHolder = surfaceView.getHolder();
-        start = (Button) findViewById(R.id.start);
-        stop = (Button) findViewById(R.id.stop);
-        start.setOnClickListener(this);
-        stop.setOnClickListener(this);
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(this);
 
         waveLength = (SeekBar) findViewById(R.id.wavelength);
         amplitude = (SeekBar) findViewById(R.id.amplitude);
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void onClick(View v) {
-        if (v == start) {
+        if (v == button) {
             if (width == 0 || height == 0) {
                 width = surfaceView.getWidth();
                 height = surfaceView.getHeight();
@@ -118,9 +115,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 return;
             }
 
-            isRunning = true;
-        } else if (v == stop) {
-            isRunning = false;
+            if (isRunning) {
+                button.setText(R.string.surface_start);
+                isRunning = false;
+            } else {
+                button.setText(R.string.surface_stop);
+                isRunning = true;
+            }
         }
     }
 
